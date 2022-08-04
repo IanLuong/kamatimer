@@ -1,6 +1,6 @@
 # KamaTimer
 
-A Pomodoro Timer Chrome Extension for people who want to stay focused.
+A Pomodoro Timer web page for people who want to stay focused.
 ## Acknowledgements
 
  - Icon created using [Ikonate](https://ikonate.com/)

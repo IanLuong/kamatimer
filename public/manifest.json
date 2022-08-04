@@ -1,19 +1,10 @@
 {
-    "name": "KamaTimer",
-    "description": "A Pomodoro Timer Chrome Extension",
-    "version": "1.0",
-    "manifest_version": 3,
-    "action": {
-        "default_popup": "index.html",
-        "default_title": "KamaTimer: no more tsismis"
-    },
-    "background": {
-        "service_worker": "background.js"
-    },
-    "icons": {
-        "16": "stopwatch.png",
-        "48": "stopwatch.png",
-        "128": "stopwatch.png"
-    },
-    "permissions": ["storage"]
+  "name": "KamaTimer",
+  "description": "A Pomodoro Timer",
+  "version": "1.0",
+  "icons": {
+    "16": "stopwatch.png",
+    "48": "stopwatch.png",
+    "128": "stopwatch.png"
+  }
 }

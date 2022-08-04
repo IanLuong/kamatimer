@@ -4,6 +4,7 @@ module.exports = {
     theme: {
         fontFamily: {
             cabin: '"Cabin", "sans-serif"',
+            cinzel: '"Cinzel, "serif',
         },
         extend: {},
     },

@@ -1,0 +1,10 @@
+{
+  "name": "KamaTimer",
+  "description": "A Pomodoro Timer",
+  "version": "1.0",
+  "icons": {
+    "16": "stopwatch.png",
+    "48": "stopwatch.png",
+    "128": "stopwatch.png"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/kamatimer/static/css/main.0afc5201.css",
+    "main.js": "/kamatimer/static/js/main.c3521e49.js",
+    "index.html": "/kamatimer/index.html",
+    "main.0afc5201.css.map": "/kamatimer/static/css/main.0afc5201.css.map",
+    "main.c3521e49.js.map": "/kamatimer/static/js/main.c3521e49.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0afc5201.css",
+    "static/js/main.c3521e49.js"
+  ]
+}

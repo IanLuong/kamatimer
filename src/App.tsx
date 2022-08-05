@@ -7,19 +7,22 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useEffect, useState } from "react"
-import Settings from "./components/Settings"
+import SettingsPopup from "./components/SettingsPopup"
 
 function App() {
-  let readyVal = 5
-  let activeVal = 900
-  let breakVal = 300
+  const [settings, setSettings] = useState({
+    readyTimer: 5,
+    activeTimer: 900,
+    breakTimer: 300,
+    darkMode: false, //TODO: Implement Dark Mode
+  })
 
-  const [timeRemaining, setTimeRemaining] = useState(readyVal)
+  const [timeRemaining, setTimeRemaining] = useState(settings.readyTimer)
   const [isTimeRunning, setIsTimeRunning] = useState(false)
   const [mode, setMode] = useState("ready for it?")
   const [backgroundColor, setBackgroundColor] = useState("bg-yellow-500")
 
-  const [isSettingsVisible, setIsSettingsVisible] = useState(true)
+  const [isSettingsVisible, setIsSettingsVisible] = useState(false)
 
   useEffect(() => {
     if (isTimeRunning && timeRemaining > 0) {
@@ -36,25 +39,25 @@ function App() {
     switch (mode) {
       case "ready for it?":
         setMode("active")
-        setTimeRemaining(activeVal)
+        setTimeRemaining(settings.activeTimer)
         setBackgroundColor("bg-red-500")
         break
       case "active":
         setMode("break")
-        setTimeRemaining(breakVal)
+        setTimeRemaining(settings.breakTimer)
         setBackgroundColor("bg-green-500")
         break
       case "break":
         setMode("active")
-        setTimeRemaining(readyVal)
+        setTimeRemaining(settings.readyTimer)
         setBackgroundColor("bg-red-500")
         break
     }
   }
 
-  function getTimeString() {
-    const minutes = Math.floor(timeRemaining / 60)
-    const seconds = timeRemaining - Math.floor(timeRemaining / 60) * 60
+  function getTimeString(input: number) {
+    const minutes = Math.floor(input / 60)
+    const seconds = input - Math.floor(input / 60) * 60
 
     let timeString = ""
     if (minutes < 10) {
@@ -65,11 +68,19 @@ function App() {
     return timeString
   }
 
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value, checked } = event.target
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      [name]: name === "darkMode" ? checked : value,
+    }))
+  }
+
   return (
     <div
       className={`w-full h-screen rounded-lg ${backgroundColor} border-4 border-white border-solid flex flex-col`}
     >
-      <nav className="w-full p-4 flex justify-between items-center border-b-4">
+      <nav className="w-full p-4 flex justify-between items-center">
         <div className="flex gap-2">
           <FontAwesomeIcon className="navbar-icon" icon={faVolumeMute} />
           {/* <FontAwesomeIcon className="navbar-icon" icon={faPause} /> */}
@@ -88,7 +99,9 @@ function App() {
       <div className="h-1/2 m-auto">
         <div className="w-full h-3/4 flex flex-col justify-center gap-8 items-center font-cabin">
           <h1 className="text-5xl font-bold text-white">{mode}</h1>
-          <h1 className="text-8xl font-bold text-white">{getTimeString()}</h1>
+          <h1 className="text-8xl font-bold text-white">
+            {getTimeString(timeRemaining)}
+          </h1>
           <div className="flex gap-4">
             <button
               className="timer-button"
@@ -105,7 +118,7 @@ function App() {
             <button
               className="timer-button"
               onClick={() => {
-                setTimeRemaining(readyVal)
+                setTimeRemaining(settings.readyTimer)
                 setMode("ready for it?")
                 setBackgroundColor("bg-yellow-500")
                 setIsTimeRunning(false)
@@ -116,14 +129,50 @@ function App() {
           </div>
         </div>
       </div>
-      <Settings
+      <SettingsPopup
         visible={isSettingsVisible}
         setVisible={setIsSettingsVisible}
       >
-        <div>
-          Bob
+        <div className="flex justify-between border-b-2 py-4">
+          <div>
+            <h1 className="">Set Focus Time (secs)</h1>
+            <p className="text-sm text-black/60">
+              Timer must be stopped before applying
+            </p>
+          </div>
+          <input
+            className="bg-red-300 w-16 text-center h-6 self-center"
+            type="text"
+            name="activeTimer"
+            value={settings.activeTimer}
+            onChange={handleChange}
+          />
         </div>
-      </Settings>
+        <div className="flex justify-between border-b-2 py-4">
+          <div>
+            <h1 className="">Set Break Time (secs)</h1>
+            <p className="text-sm text-black/60">
+              Timer must be stopped before applying
+            </p>
+          </div>
+          <input
+            className="bg-green-300 w-16 text-center h-6 self-center"
+            type="text"
+            name="breakTimer"
+            value={settings.breakTimer}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex justify-between border-b-2 py-4">
+          <h1 className="">Dark Mode</h1>
+          <input
+            type="checkbox"
+            name="darkMode"
+            checked={settings.darkMode}
+            onChange={handleChange}
+          />
+        </div>
+      </SettingsPopup>
     </div>
   )
 }

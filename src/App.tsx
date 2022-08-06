@@ -7,7 +7,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useEffect, useState } from "react"
+import useSound from "use-sound"
 import SettingsPopup from "./components/SettingsPopup"
+
+const bellSfx = require("./sounds/bell.mp3")
+const tickSfx = require("./sounds/tick.mp3")
+
 
 function App() {
   const [settings, setSettings] = useState(
@@ -24,16 +29,24 @@ function App() {
 
   const [isSettingsVisible, setIsSettingsVisible] = useState(false)
 
+  const [playTick] = useSound(tickSfx)
+  const [playBell] = useSound(bellSfx)
+
   //Tracks time changes
   useEffect(() => {
     if (isTimeRunning && timeRemaining > 0) {
       let timer = setTimeout(() => {
         setTimeRemaining((time: number) => time - 1)
       }, 1000)
+      if (timeRemaining < 10) {
+        playTick()
+      }
       return () => clearTimeout(timer)
     } else if (timeRemaining === 0) {
+      playBell()
       updateMode()
     }
+
   }, [timeRemaining, isTimeRunning])
 
   //Tracks settings changes

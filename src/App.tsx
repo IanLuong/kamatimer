@@ -10,12 +10,12 @@ import React, { useEffect, useState } from "react"
 import SettingsPopup from "./components/SettingsPopup"
 
 function App() {
-  const [settings, setSettings] = useState({
-    readyTimer: 5,
-    activeTimer: 900,
-    breakTimer: 300,
-    darkMode: false, //TODO: Implement Dark Mode
-  })
+  const [settings, setSettings] = useState(
+    JSON.parse(
+      localStorage.getItem("settings") ||
+        "{readyTimer: 5, activeTimer: 1500, breakTimer: 300, darkMode: false}" //TODO: Implement Dark Mode
+    )
+  )
 
   const [timeRemaining, setTimeRemaining] = useState(settings.readyTimer)
   const [isTimeRunning, setIsTimeRunning] = useState(false)
@@ -24,16 +24,22 @@ function App() {
 
   const [isSettingsVisible, setIsSettingsVisible] = useState(false)
 
+  //Tracks time changes
   useEffect(() => {
     if (isTimeRunning && timeRemaining > 0) {
       let timer = setTimeout(() => {
-        setTimeRemaining((time) => time - 1)
+        setTimeRemaining((time: number) => time - 1)
       }, 1000)
       return () => clearTimeout(timer)
     } else if (timeRemaining === 0) {
       updateMode()
     }
   }, [timeRemaining, isTimeRunning])
+
+  //Tracks settings changes
+  useEffect(() => {
+    localStorage.setItem("settings", JSON.stringify(settings))
+  }, [settings])
 
   function updateMode() {
     switch (mode) {
@@ -70,7 +76,7 @@ function App() {
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, checked } = event.target
-    setSettings((prevSettings) => ({
+    setSettings((prevSettings: Object) => ({
       ...prevSettings,
       [name]: name === "darkMode" ? checked : value,
     }))
@@ -111,7 +117,9 @@ function App() {
             </button>
             <button
               className="timer-button"
-              onClick={() => setTimeRemaining((current) => current + 60)}
+              onClick={() =>
+                setTimeRemaining((current: number) => current + 60)
+              }
             >
               +1:00
             </button>
@@ -137,6 +145,9 @@ function App() {
           <div>
             <h1 className="">Set Focus Time (secs)</h1>
             <p className="text-sm text-black/60">
+              Default = 1500s
+            </p>
+            <p className="text-sm text-black/60">
               Timer must be stopped before applying
             </p>
           </div>
@@ -151,6 +162,9 @@ function App() {
         <div className="flex justify-between border-b-2 py-4">
           <div>
             <h1 className="">Set Break Time (secs)</h1>
+            <p className="text-sm text-black/60">
+              Default = 300s
+            </p>
             <p className="text-sm text-black/60">
               Timer must be stopped before applying
             </p>

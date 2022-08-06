@@ -13,13 +13,14 @@ import SettingsPopup from "./components/SettingsPopup"
 const bellSfx = require("./sounds/bell.mp3")
 const tickSfx = require("./sounds/tick.mp3")
 
-
 function App() {
   const [settings, setSettings] = useState(
-    JSON.parse(
-      localStorage.getItem("settings") ||
-        "{readyTimer: 5, activeTimer: 1500, breakTimer: 300, darkMode: false}" //TODO: Implement Dark Mode
-    )
+    JSON.parse(localStorage.getItem("settings")!) || {
+      readyTimer: 5,
+      activeTimer: 1500,
+      breakTimer: 300,
+      darkMode: false,
+    } //TODO: Implement Dark Mode
   )
 
   const [timeRemaining, setTimeRemaining] = useState(settings.readyTimer)
@@ -46,7 +47,6 @@ function App() {
       playBell()
       updateMode()
     }
-
   }, [timeRemaining, isTimeRunning])
 
   //Tracks settings changes
@@ -157,9 +157,7 @@ function App() {
         <div className="flex justify-between border-b-2 py-4">
           <div>
             <h1 className="">Set Focus Time (secs)</h1>
-            <p className="text-sm text-black/60">
-              Default = 1500s
-            </p>
+            <p className="text-sm text-black/60">Default = 1500s</p>
             <p className="text-sm text-black/60">
               Timer must be stopped before applying
             </p>
@@ -175,9 +173,7 @@ function App() {
         <div className="flex justify-between border-b-2 py-4">
           <div>
             <h1 className="">Set Break Time (secs)</h1>
-            <p className="text-sm text-black/60">
-              Default = 300s
-            </p>
+            <p className="text-sm text-black/60">Default = 300s</p>
             <p className="text-sm text-black/60">
               Timer must be stopped before applying
             </p>

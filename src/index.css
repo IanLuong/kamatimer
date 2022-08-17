@@ -9,7 +9,7 @@
   }
 
   .timer-button {
-    @apply bg-white w-20 rounded-lg text-lg hover:bg-black hover:text-white cursor-pointer
+    @apply shadow-md bg-white w-20 rounded-lg text-lg hover:bg-black hover:text-white cursor-pointer disabled:bg-slate-100 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none disabled:cursor-default
   }
 
 }

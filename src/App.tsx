@@ -1,3 +1,4 @@
+import { inactiveMessages, activeMessages, breakMessages } from "./messages"
 import React, { useEffect, useState } from "react"
 import useSound from "use-sound"
 import Navbar from "./components/Navbar"
@@ -5,6 +6,13 @@ import SettingsPopup from "./components/SettingsPopup"
 
 const bellSfx = require("./sounds/bell.mp3")
 const tickSfx = require("./sounds/tick.mp3")
+
+//TODO: Refactor and simplify mode switching code
+enum Mode {
+  INACTIVE,
+  ACTIVE,
+  BREAK,
+}
 
 function App() {
   const [settings, setSettings] = useState(
@@ -19,7 +27,8 @@ function App() {
 
   const [timeRemaining, setTimeRemaining] = useState(settings.readyTimer)
   const [isTimeRunning, setIsTimeRunning] = useState(false)
-  const [mode, setMode] = useState("ready for it?")
+  const [mode, setMode] = useState(Mode.INACTIVE)
+  const [message, setMessage] = useState(inactiveMessages[Math.floor(Math.random() * inactiveMessages.length)])
   const [backgroundColor, setBackgroundColor] = useState("bg-yellow-500")
 
   const [isSettingsVisible, setIsSettingsVisible] = useState(false)
@@ -33,13 +42,16 @@ function App() {
       let timer = setTimeout(() => {
         setTimeRemaining((time: number) => time - 1)
       }, 1000)
-      if (!settings.isMuted){
-      if (timeRemaining < 10) {
-        playTick()
-      }}
+      if (!settings.isMuted) {
+        if (timeRemaining < 10) {
+          playTick()
+        }
+      }
       return () => clearTimeout(timer)
     } else if (timeRemaining === 0) {
-      if (!settings.isMuted) {playBell()}
+      if (!settings.isMuted) {
+        playBell()
+      }
       updateMode()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,18 +64,21 @@ function App() {
 
   function updateMode() {
     switch (mode) {
-      case "ready for it?":
-        setMode("active")
+      case Mode.INACTIVE:
+        setMode(Mode.ACTIVE)
+        setMessage(activeMessages[Math.floor(Math.random() * activeMessages.length)])
         setTimeRemaining(settings.activeTimer)
         setBackgroundColor("bg-red-500")
         break
-      case "active":
-        setMode("break")
+      case Mode.ACTIVE:
+        setMode(Mode.BREAK)
+        setMessage(breakMessages[Math.floor(Math.random() * breakMessages.length)])
         setTimeRemaining(settings.breakTimer)
         setBackgroundColor("bg-green-500")
         break
-      case "break":
-        setMode("active")
+      case Mode.BREAK:
+        setMode(Mode.ACTIVE)
+        setMessage(activeMessages[Math.floor(Math.random() * activeMessages.length)])
         setTimeRemaining(settings.readyTimer)
         setBackgroundColor("bg-red-500")
         break
@@ -102,7 +117,7 @@ function App() {
       />
       <div className="m-auto">
         <div className="w-full h-3/4 flex flex-col justify-center gap-8 items-center text-center font-cabin">
-          <h1 className="text-6xl font-bold text-white">{mode}</h1>
+          <h1 className="text-5xl font-bold text-white">{message}</h1>
           <h1 className="text-8xl font-bold text-white">
             {getTimeString(timeRemaining)}
           </h1>
@@ -115,6 +130,7 @@ function App() {
             </button>
             <div className="flex gap-4 w-full justify-center">
               <button
+                disabled={mode === Mode.INACTIVE}
                 className="timer-button w-full"
                 onClick={() =>
                   setTimeRemaining((current: number) => current + 60)
@@ -123,10 +139,12 @@ function App() {
                 +1:00
               </button>
               <button
+                disabled={mode === Mode.INACTIVE}
                 className="timer-button w-full"
                 onClick={() => {
                   setTimeRemaining(settings.readyTimer)
-                  setMode("ready for it?")
+                  setMode(Mode.INACTIVE)
+                  setMessage(inactiveMessages[Math.floor(Math.random() * inactiveMessages.length)])
                   setBackgroundColor("bg-yellow-500")
                   setIsTimeRunning(false)
                 }}

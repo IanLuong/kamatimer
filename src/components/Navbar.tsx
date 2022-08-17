@@ -36,7 +36,7 @@ export default function Navbar(props: NavbarProps) {
           icon={props.settings.isMuted ? faVolumeMute : faVolumeUp}
         />
       </button>
-      <h4 className="font-cinzel text-4xl md:text-5xl font-bold text-white">
+      <h4 className="font-dynapuff text-4xl md:text-5xl font-medium text-white">
         KamaTimer
       </h4>
       {/* <FontAwesomeIcon

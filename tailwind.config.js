@@ -3,8 +3,8 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
-      cabin: '"Cabin", "sans-serif"',
-      cinzel: '"Cinzel", "serif',
+      cabin: "Cabin, sans-serif",
+      dynapuff: "Dynapuff, cursive",
     },
     extend: {},
   },

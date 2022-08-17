@@ -33,14 +33,16 @@ function App() {
       let timer = setTimeout(() => {
         setTimeRemaining((time: number) => time - 1)
       }, 1000)
+      if (!settings.isMuted){
       if (timeRemaining < 10) {
         playTick()
-      }
+      }}
       return () => clearTimeout(timer)
     } else if (timeRemaining === 0) {
-      playBell()
+      if (!settings.isMuted) {playBell()}
       updateMode()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeRemaining, isTimeRunning])
 
   //Tracks settings changes
@@ -93,14 +95,18 @@ function App() {
     <div
       className={`w-full h-screen rounded-lg ${backgroundColor} border-4 border-white border-solid flex flex-col`}
     >
-      <Navbar setIsSettingsVisible={setIsSettingsVisible} settings={settings} setSettings={setSettings} />
+      <Navbar
+        setIsSettingsVisible={setIsSettingsVisible}
+        settings={settings}
+        setSettings={setSettings}
+      />
       <div className="m-auto">
-        <div className="w-full h-3/4 flex flex-col justify-center gap-8 items-center font-cabin">
+        <div className="w-full h-3/4 flex flex-col justify-center gap-8 items-center text-center font-cabin">
           <h1 className="text-6xl font-bold text-white">{mode}</h1>
-          <h1 className="text-8xl font-bold text-white w-full">
+          <h1 className="text-8xl font-bold text-white">
             {getTimeString(timeRemaining)}
           </h1>
-          <div className="flex flex-col gap-4 items-center w-full">
+          <div className="flex flex-col gap-4 items-center w-72">
             <button
               className="timer-button text-2xl w-full"
               onClick={() => setIsTimeRunning((prev) => !prev)}

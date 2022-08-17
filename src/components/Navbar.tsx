@@ -1,4 +1,4 @@
-import { faGithub } from "@fortawesome/free-brands-svg-icons"
+// import { faGithub } from "@fortawesome/free-brands-svg-icons"
 import {
   faGear,
   faVolumeMute,

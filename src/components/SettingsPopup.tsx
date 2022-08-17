@@ -1,7 +1,7 @@
 interface SettingsProps {
   visible: boolean
-  setVisible: Function
-  children: any
+  setVisible: (input: boolean) => void
+  children?: React.ReactNode
 }
 
 export default function SettingsPopup(props: SettingsProps) {

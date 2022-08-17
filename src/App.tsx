@@ -1,13 +1,6 @@
-import { faGithub } from "@fortawesome/free-brands-svg-icons"
-import {
-  faGear,
-  faVolumeMute,
-  faVolumeHigh,
-  faPause,
-} from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useEffect, useState } from "react"
 import useSound from "use-sound"
+import Navbar from "./components/Navbar"
 import SettingsPopup from "./components/SettingsPopup"
 
 const bellSfx = require("./sounds/bell.mp3")
@@ -16,6 +9,7 @@ const tickSfx = require("./sounds/tick.mp3")
 function App() {
   const [settings, setSettings] = useState(
     JSON.parse(localStorage.getItem("settings")!) || {
+      isMuted: false,
       readyTimer: 5,
       activeTimer: 1500,
       breakTimer: 300,
@@ -99,54 +93,41 @@ function App() {
     <div
       className={`w-full h-screen rounded-lg ${backgroundColor} border-4 border-white border-solid flex flex-col`}
     >
-      <nav className="w-full p-4 flex justify-between items-center">
-        <div className="flex gap-2">
-          <FontAwesomeIcon className="navbar-icon" icon={faVolumeMute} />
-          {/* <FontAwesomeIcon className="navbar-icon" icon={faPause} /> */}
-        </div>
-        <h4 className="font-cinzel text-3xl md:text-4xl font-bold text-white">
-          KamaTimer
-        </h4>
-        {/* <FontAwesomeIcon
-          className="text-5xl text-gray-800 cursor-pointer mx-auto"
-          icon={faGithub}
-        /> */}
-        <button onClick={() => setIsSettingsVisible(true)}>
-          <FontAwesomeIcon className="navbar-icon" icon={faGear} />
-        </button>
-      </nav>
-      <div className="h-1/2 m-auto">
+      <Navbar setIsSettingsVisible={setIsSettingsVisible} settings={settings} setSettings={setSettings} />
+      <div className="m-auto">
         <div className="w-full h-3/4 flex flex-col justify-center gap-8 items-center font-cabin">
-          <h1 className="text-5xl font-bold text-white">{mode}</h1>
-          <h1 className="text-8xl font-bold text-white">
+          <h1 className="text-6xl font-bold text-white">{mode}</h1>
+          <h1 className="text-8xl font-bold text-white w-full">
             {getTimeString(timeRemaining)}
           </h1>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-4 items-center w-full">
             <button
-              className="timer-button"
+              className="timer-button text-2xl w-full"
               onClick={() => setIsTimeRunning((prev) => !prev)}
             >
               {isTimeRunning ? "Pause" : "Start"}
             </button>
-            <button
-              className="timer-button"
-              onClick={() =>
-                setTimeRemaining((current: number) => current + 60)
-              }
-            >
-              +1:00
-            </button>
-            <button
-              className="timer-button"
-              onClick={() => {
-                setTimeRemaining(settings.readyTimer)
-                setMode("ready for it?")
-                setBackgroundColor("bg-yellow-500")
-                setIsTimeRunning(false)
-              }}
-            >
-              Stop
-            </button>
+            <div className="flex gap-4 w-full justify-center">
+              <button
+                className="timer-button w-full"
+                onClick={() =>
+                  setTimeRemaining((current: number) => current + 60)
+                }
+              >
+                +1:00
+              </button>
+              <button
+                className="timer-button w-full"
+                onClick={() => {
+                  setTimeRemaining(settings.readyTimer)
+                  setMode("ready for it?")
+                  setBackgroundColor("bg-yellow-500")
+                  setIsTimeRunning(false)
+                }}
+              >
+                Stop
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -28,7 +28,9 @@ function App() {
   const [timeRemaining, setTimeRemaining] = useState(settings.readyTimer)
   const [isTimeRunning, setIsTimeRunning] = useState(false)
   const [mode, setMode] = useState(Mode.INACTIVE)
-  const [message, setMessage] = useState(inactiveMessages[Math.floor(Math.random() * inactiveMessages.length)])
+  const [message, setMessage] = useState(
+    inactiveMessages[Math.floor(Math.random() * inactiveMessages.length)]
+  )
   const [backgroundColor, setBackgroundColor] = useState("bg-yellow-500")
 
   const [isSettingsVisible, setIsSettingsVisible] = useState(false)
@@ -65,24 +67,34 @@ function App() {
   function updateMode() {
     switch (mode) {
       case Mode.INACTIVE:
-        setMode(Mode.ACTIVE)
-        setMessage(activeMessages[Math.floor(Math.random() * activeMessages.length)])
-        setTimeRemaining(settings.activeTimer)
-        setBackgroundColor("bg-red-500")
+        changeToMode(Mode.ACTIVE, settings.activeTimer, "bg-red-500")
         break
       case Mode.ACTIVE:
-        setMode(Mode.BREAK)
-        setMessage(breakMessages[Math.floor(Math.random() * breakMessages.length)])
-        setTimeRemaining(settings.breakTimer)
-        setBackgroundColor("bg-green-500")
+        changeToMode(Mode.BREAK, settings.breakTimer, "bg-green-500")
         break
       case Mode.BREAK:
-        setMode(Mode.ACTIVE)
-        setMessage(activeMessages[Math.floor(Math.random() * activeMessages.length)])
-        setTimeRemaining(settings.readyTimer)
-        setBackgroundColor("bg-red-500")
+        changeToMode(Mode.ACTIVE, settings.readyTimer, "bg-red-500")
         break
     }
+  }
+
+  function changeToMode(
+    inputMode: Mode,
+    inputTime: number,
+    inputColor: string
+  ) {
+    setMode(inputMode)
+    const selectedMessages =
+      inputMode === Mode.INACTIVE
+        ? inactiveMessages
+        : inputMode === Mode.ACTIVE
+        ? activeMessages
+        : breakMessages
+    setMessage(
+      selectedMessages[Math.floor(Math.random() * selectedMessages.length)]
+    )
+    setTimeRemaining(inputTime)
+    setBackgroundColor(inputColor)
   }
 
   function getTimeString(input: number) {
@@ -142,10 +154,11 @@ function App() {
                 disabled={mode === Mode.INACTIVE}
                 className="timer-button w-full"
                 onClick={() => {
-                  setTimeRemaining(settings.readyTimer)
-                  setMode(Mode.INACTIVE)
-                  setMessage(inactiveMessages[Math.floor(Math.random() * inactiveMessages.length)])
-                  setBackgroundColor("bg-yellow-500")
+                  changeToMode(
+                    Mode.INACTIVE,
+                    settings.readyTimer,
+                    "bg-yellow-500"
+                  )
                   setIsTimeRunning(false)
                 }}
               >

@@ -5,11 +5,15 @@
 @layer components {
 
   .navbar-icon {
-    @apply text-4xl md:text-5xl text-white cursor-pointer hover:text-gray-800 focus:text-gray-800
+    @apply text-4xl md:text-5xl text-white cursor-pointer hover:text-gray-800 focus:text-gray-800 dark:hover:text-slate-200
   }
 
   .timer-button {
-    @apply shadow-md bg-white w-20 rounded-lg text-lg hover:bg-black hover:text-white cursor-pointer disabled:bg-slate-100 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none disabled:cursor-default
+    @apply shadow-md bg-white w-20 rounded-lg text-lg cursor-pointer
+    hover:bg-black hover:text-white
+    disabled:bg-slate-100 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none disabled:cursor-default
+    dark:bg-gunmetal dark:hover:text-slate-200 dark:hover:bg-hoverblack
+    dark:disabled:bg-eerie dark:disabled:hover:text-slate-500
   }
 
 }

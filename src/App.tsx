@@ -136,7 +136,9 @@ function App() {
         />
         <div className="m-auto">
           <div className="w-full h-3/4 flex flex-col justify-center gap-8 items-center text-center font-cabin">
-            <h1 className="text-5xl font-bold text-white dark:text-inherit">{message}</h1>
+            <h1 className="text-5xl font-bold text-white dark:text-inherit">
+              {message}
+            </h1>
             <h1 className="text-8xl font-bold text-white dark:text-inherit">
               {getTimeString(timeRemaining)}
             </h1>
@@ -192,7 +194,8 @@ function App() {
               </p>
             </div>
             <input
-              className="bg-red-300 w-16 text-center h-6 self-center dark:text-black"
+              disabled={isTimeRunning}
+              className="bg-red-300 w-16 text-center h-6 self-center dark:text-black disabled:bg-slate-100 disabled:text-slate-500"
               type="text"
               name="activeTimer"
               value={settings.activeTimer}
@@ -210,7 +213,8 @@ function App() {
               </p>
             </div>
             <input
-              className="bg-green-300 w-16 text-center h-6 self-center dark:text-black"
+              disabled={isTimeRunning}
+              className="bg-green-300 w-16 text-center h-6 self-center dark:text-black disabled:bg-slate-100 disabled:text-slate-500"
               type="text"
               name="breakTimer"
               value={settings.breakTimer}
@@ -225,6 +229,9 @@ function App() {
               checked={settings.darkMode}
               onChange={handleChange}
             />
+          </div>
+          <div className="flex flex-col text-right justify-end py-4"> 
+            <p className="font-cabin text-sm">Created by <a href="https://ianluong.github.io" target="_blank" className="underline decoration-dotted" rel="noreferrer">Ian Luong</a></p>
           </div>
         </SettingsPopup>
       </div>

@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/kamatimer/static/css/main.6093cec1.css",
-    "main.js": "/kamatimer/static/js/main.fbc98774.js",
+    "main.css": "/kamatimer/static/css/main.da4678ee.css",
+    "main.js": "/kamatimer/static/js/main.9dd09629.js",
     "static/js/845.2f66eb10.chunk.js": "/kamatimer/static/js/845.2f66eb10.chunk.js",
     "static/media/bell.mp3": "/kamatimer/static/media/bell.750690dda132a3378abc.mp3",
     "static/media/tick.mp3": "/kamatimer/static/media/tick.847de2499795ddf2da6b.mp3",
     "index.html": "/kamatimer/index.html",
-    "main.6093cec1.css.map": "/kamatimer/static/css/main.6093cec1.css.map",
-    "main.fbc98774.js.map": "/kamatimer/static/js/main.fbc98774.js.map",
+    "main.da4678ee.css.map": "/kamatimer/static/css/main.da4678ee.css.map",
+    "main.9dd09629.js.map": "/kamatimer/static/js/main.9dd09629.js.map",
     "845.2f66eb10.chunk.js.map": "/kamatimer/static/js/845.2f66eb10.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6093cec1.css",
-    "static/js/main.fbc98774.js"
+    "static/css/main.da4678ee.css",
+    "static/js/main.9dd09629.js"
   ]
 }

@@ -16,4 +16,8 @@
     dark:disabled:bg-eerie dark:disabled:hover:text-slate-500
   }
 
+  .setting-input {
+    @apply w-16 text-center h-6 self-center dark:text-black disabled:bg-slate-100 disabled:text-slate-500 dark:disabled:bg-raisin dark:disabled:text-white/60
+  }
+
 }

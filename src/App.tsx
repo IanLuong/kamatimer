@@ -195,7 +195,7 @@ function App() {
             </div>
             <input
               disabled={isTimeRunning}
-              className="bg-red-300 w-16 text-center h-6 self-center dark:text-black disabled:bg-slate-100 disabled:text-slate-500"
+              className="bg-red-300 setting-input"
               type="text"
               name="activeTimer"
               value={settings.activeTimer}
@@ -214,7 +214,7 @@ function App() {
             </div>
             <input
               disabled={isTimeRunning}
-              className="bg-green-300 w-16 text-center h-6 self-center dark:text-black disabled:bg-slate-100 disabled:text-slate-500"
+              className="bg-green-300 setting-input"
               type="text"
               name="breakTimer"
               value={settings.breakTimer}

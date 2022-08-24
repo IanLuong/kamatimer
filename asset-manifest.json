@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/kamatimer/static/css/main.9a76827d.css",
-    "main.js": "/kamatimer/static/js/main.a96a225e.js",
+    "main.css": "/kamatimer/static/css/main.e9baa4f2.css",
+    "main.js": "/kamatimer/static/js/main.e19a55cf.js",
     "static/js/845.2f66eb10.chunk.js": "/kamatimer/static/js/845.2f66eb10.chunk.js",
     "static/media/bell.mp3": "/kamatimer/static/media/bell.750690dda132a3378abc.mp3",
     "static/media/tick.mp3": "/kamatimer/static/media/tick.847de2499795ddf2da6b.mp3",
     "index.html": "/kamatimer/index.html",
-    "main.9a76827d.css.map": "/kamatimer/static/css/main.9a76827d.css.map",
-    "main.a96a225e.js.map": "/kamatimer/static/js/main.a96a225e.js.map",
+    "main.e9baa4f2.css.map": "/kamatimer/static/css/main.e9baa4f2.css.map",
+    "main.e19a55cf.js.map": "/kamatimer/static/js/main.e19a55cf.js.map",
     "845.2f66eb10.chunk.js.map": "/kamatimer/static/js/845.2f66eb10.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9a76827d.css",
-    "static/js/main.a96a225e.js"
+    "static/css/main.e9baa4f2.css",
+    "static/js/main.e19a55cf.js"
   ]
 }

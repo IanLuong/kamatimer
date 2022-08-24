@@ -21,7 +21,7 @@ function App() {
       readyTimer: 5,
       activeTimer: 1500,
       breakTimer: 300,
-      darkMode: false, //TODO: Add dark mode device preference check
+      darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? true : false, //TODO: Add dark mode device preference check
     }
   )
 

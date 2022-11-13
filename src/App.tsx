@@ -4,6 +4,8 @@ import useSound from "use-sound"
 import Navbar from "./components/Navbar"
 import SettingsPopup from "./components/SettingsPopup"
 
+import packageJson from "../package.json"
+
 const bellSfx = require("./sounds/bell.mp3")
 const tickSfx = require("./sounds/tick.mp3")
 
@@ -21,7 +23,11 @@ function App() {
       readyTimer: 5,
       activeTimer: 1500,
       breakTimer: 300,
-      darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? true : false, //TODO: Add dark mode device preference check
+      darkMode:
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? true
+          : false,
     }
   )
 
@@ -230,8 +236,19 @@ function App() {
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col text-right justify-end py-4"> 
-            <p className="font-cabin text-sm">Created by <a href="https://ianluong.github.io" target="_blank" className="underline decoration-dotted" rel="noreferrer">Ian Luong</a></p>
+          <div className="flex justify-between py-4">
+            <p className="font-cabin text-sm">{`v${packageJson.version}`}</p>
+            <p className="font-cabin text-sm">
+              Created by{" "}
+              <a
+                href="https://ianluong.github.io"
+                target="_blank"
+                className="underline decoration-dotted"
+                rel="noreferrer"
+              >
+                Ian Luong
+              </a>
+            </p>
           </div>
         </SettingsPopup>
       </div>

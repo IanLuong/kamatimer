@@ -127,7 +127,7 @@ function App() {
   return (
     <div className={settings.darkMode ? "dark" : ""}>
       <div
-        className={`w-full h-screen ${backgroundColor} border-4 border-white dark:bg-raisin dark:border-eerie ${
+        className={`w-full h-screen min-h-[650px] ${backgroundColor} border-4 border-white dark:bg-raisin dark:border-eerie ${
           mode === Mode.ACTIVE
             ? "dark:text-red-500"
             : mode === Mode.INACTIVE

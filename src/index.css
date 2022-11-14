@@ -10,7 +10,7 @@
 
   .timer-button {
     @apply shadow-md bg-white w-20 rounded-lg text-lg cursor-pointer
-    hover:bg-black hover:text-white
+    hover:bg-gray-800 hover:text-white
     disabled:bg-slate-100 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none disabled:cursor-default
     dark:bg-gunmetal dark:hover:text-slate-200 dark:hover:bg-hoverblack
     dark:disabled:bg-eerie dark:disabled:hover:text-slate-500

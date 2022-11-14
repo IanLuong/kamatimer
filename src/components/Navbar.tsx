@@ -1,4 +1,3 @@
-// import { faGithub } from "@fortawesome/free-brands-svg-icons"
 import {
   faGear,
   faVolumeMute,
@@ -29,23 +28,28 @@ export default function Navbar(props: NavbarProps) {
   }
 
   return (
-    <nav className="w-full p-4 flex justify-between items-center text-white dark:text-inherit">
-      <button onClick={toggleMute}>
-        <FontAwesomeIcon
-          className="navbar-icon w-10 dark:text-inherit"
-          icon={props.settings.isMuted ? faVolumeMute : faVolumeUp}
-        />
-      </button>
-      <h4 className="font-dynapuff text-4xl md:text-5xl font-medium">
-        KamaTimer
-      </h4>
-      {/* <FontAwesomeIcon
-          className="text-5xl text-gray-800 cursor-pointer mx-auto"
-          icon={faGithub}
-        /> */}
-      <button onClick={() => props.setIsSettingsVisible(true)}>
-        <FontAwesomeIcon className="navbar-icon dark:text-inherit" icon={faGear} />
-      </button>
-    </nav>
+    <div className="w-full p-4 text-white dark:text-inherit border-b-4 dark:bg-eerie">
+      <nav className="max-w-5xl mx-auto flex justify-between items-center">
+        <div>
+          <button onClick={toggleMute}>
+            <FontAwesomeIcon
+              className="navbar-icon w-10 dark:text-inherit"
+              icon={props.settings.isMuted ? faVolumeMute : faVolumeUp}
+            />
+          </button>
+        </div>
+        <h4 className="font-dynapuff text-4xl md:text-5xl font-medium">
+          KamaTimer
+        </h4>
+        <div>
+          <button onClick={() => props.setIsSettingsVisible(true)}>
+            <FontAwesomeIcon
+              className="navbar-icon dark:text-inherit"
+              icon={faGear}
+            />
+          </button>
+        </div>
+      </nav>
+    </div>
   )
 }

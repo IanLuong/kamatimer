@@ -4,7 +4,8 @@ import useSound from "use-sound"
 import Navbar from "./components/Navbar"
 import SettingsPopup from "./components/SettingsPopup"
 
-import packageJson from "../package.json"
+import { getTimeString } from "./utils/timeUtils"
+import { getDefaultSettings } from "./utils/settingsUtils"
 
 const bellSfx = require("./sounds/bell.mp3")
 const tickSfx = require("./sounds/tick.mp3")
@@ -16,19 +17,20 @@ enum Mode {
   BREAK,
 }
 
+interface IState {
+  settings: {
+    audioLevel: number
+    readyTimer: number
+    activeTimer: number
+    breakTimer: number
+    darkMode: boolean
+  }
+}
+
 function App() {
-  const [settings, setSettings] = useState(
-    JSON.parse(localStorage.getItem("settings")!) || {
-      isMuted: false,
-      readyTimer: 5,
-      activeTimer: 1500,
-      breakTimer: 300,
-      darkMode:
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? true
-          : false,
-    }
+  //Checks if settings are in local storage, otherwise get default
+  const [settings, setSettings] = useState<IState["settings"]>(
+    JSON.parse(localStorage.getItem("settings")!) || getDefaultSettings()
   )
 
   const [timeRemaining, setTimeRemaining] = useState(settings.readyTimer)
@@ -50,14 +52,17 @@ function App() {
       let timer = setTimeout(() => {
         setTimeRemaining((time: number) => time - 1)
       }, 1000)
-      if (!settings.isMuted) {
-        if (timeRemaining < 10) {
-          playTick()
-        }
+
+      if (
+        settings.audioLevel === 2 ||
+        (settings.audioLevel === 1 && timeRemaining < 10)
+      ) {
+        playTick()
       }
+
       return () => clearTimeout(timer)
     } else if (timeRemaining === 0) {
-      if (!settings.isMuted) {
+      if (!(settings.audioLevel === 0)) {
         playBell()
       }
       updateMode()
@@ -103,31 +108,10 @@ function App() {
     setBackgroundColor(inputColor)
   }
 
-  function getTimeString(input: number) {
-    const minutes = Math.floor(input / 60)
-    const seconds = input - Math.floor(input / 60) * 60
-
-    let timeString = ""
-    if (minutes < 10) {
-      timeString += "0"
-    }
-    timeString += `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`
-
-    return timeString
-  }
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value, checked } = event.target
-    setSettings((prevSettings: Object) => ({
-      ...prevSettings,
-      [name]: name === "darkMode" ? checked : value,
-    }))
-  }
-
   return (
     <div className={settings.darkMode ? "dark" : ""}>
       <div
-        className={`w-full h-screen min-h-[650px] ${backgroundColor} border-4 border-white dark:bg-raisin dark:border-eerie ${
+        className={`w-full h-screen min-h-[650px] ${backgroundColor} dark:bg-raisin dark:border-eerie ${
           mode === Mode.ACTIVE
             ? "dark:text-red-500"
             : mode === Mode.INACTIVE
@@ -139,8 +123,10 @@ function App() {
           setIsSettingsVisible={setIsSettingsVisible}
           settings={settings}
           setSettings={setSettings}
+          mode={mode}
         />
-        <div className="m-auto">
+
+        <main className="m-auto">
           <div className="w-full h-3/4 flex flex-col justify-center gap-8 items-center text-center font-cabin">
             <h1 className="text-5xl font-bold text-white dark:text-inherit">
               {message}
@@ -182,75 +168,17 @@ function App() {
               </div>
             </div>
           </div>
-        </div>
+        </main>
 
         {/* TODO: Refactor dark mode code */}
+        {/* TODO: Refactor settings into separate file */}
         <SettingsPopup
           visible={isSettingsVisible}
           setVisible={setIsSettingsVisible}
-        >
-          <div className="flex justify-between border-b-2 py-4">
-            <div>
-              <h1 className="">Set Focus Time (secs)</h1>
-              <p className="text-sm text-black/60 dark:text-white/60">
-                Default = 1500s
-              </p>
-              <p className="text-sm text-black/60 dark:text-white/60">
-                Timer must be stopped before applying
-              </p>
-            </div>
-            <input
-              disabled={isTimeRunning}
-              className="bg-red-300 setting-input"
-              type="text"
-              name="activeTimer"
-              value={settings.activeTimer}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex justify-between border-b-2 py-4">
-            <div>
-              <h1 className="">Set Break Time (secs)</h1>
-              <p className="text-sm text-black/60 dark:text-white/60">
-                Default = 300s
-              </p>
-              <p className="text-sm text-black/60 dark:text-white/60">
-                Timer must be stopped before applying
-              </p>
-            </div>
-            <input
-              disabled={isTimeRunning}
-              className="bg-green-300 setting-input"
-              type="text"
-              name="breakTimer"
-              value={settings.breakTimer}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex justify-between border-b-2 py-4">
-            <h1 className="">Dark Mode</h1>
-            <input
-              type="checkbox"
-              name="darkMode"
-              checked={settings.darkMode}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex justify-between py-4">
-            <p className="font-cabin text-sm">{`v${packageJson.version}`}</p>
-            <p className="font-cabin text-sm">
-              Created by{" "}
-              <a
-                href="https://ianluong.github.io"
-                target="_blank"
-                className="underline decoration-dotted"
-                rel="noreferrer"
-              >
-                Ian Luong
-              </a>
-            </p>
-          </div>
-        </SettingsPopup>
+          settings={settings}
+          setSettings={setSettings}
+          isTimeRunning={isTimeRunning}
+        />
       </div>
     </div>
   )

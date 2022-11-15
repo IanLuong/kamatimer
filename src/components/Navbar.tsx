@@ -2,17 +2,25 @@ import {
   faGear,
   faVolumeMute,
   faVolumeUp,
+  faVolumeLow,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+enum Mode {
+  INACTIVE,
+  ACTIVE,
+  BREAK,
+}
 
 interface NavbarProps {
   setIsSettingsVisible: (input: boolean) => void
   settings: settingsObject
-  setSettings: (input: Object) => void
+  setSettings: any
+  mode: Mode
 }
 
 interface settingsObject {
-  isMuted: boolean
+  audioLevel: number
   readyTimer: number
   activeTimer: number
   breakTimer: number
@@ -23,18 +31,33 @@ export default function Navbar(props: NavbarProps) {
   function toggleMute() {
     props.setSettings((prevSettings: settingsObject) => ({
       ...prevSettings,
-      isMuted: !prevSettings.isMuted,
+      audioLevel: (prevSettings.audioLevel % 3) + 1,
     }))
   }
 
   return (
-    <div className="w-full p-4 text-white dark:text-inherit border-b-4 dark:bg-eerie">
-      <nav className="max-w-5xl mx-auto flex justify-between items-center">
+    <nav
+      className={`w-full p-4 text-inherit border-b-4 dark:border-b-gunmetal bg-raisin ${
+        props.mode === Mode.ACTIVE
+          ? "text-red-500"
+          : props.mode === Mode.INACTIVE
+          ? "text-yellow-500"
+          : "text-green-500"
+      }`}
+    >
+      <div className="max-w-5xl mx-auto flex justify-between items-center">
         <div>
           <button onClick={toggleMute}>
             <FontAwesomeIcon
-              className="navbar-icon w-10 dark:text-inherit"
-              icon={props.settings.isMuted ? faVolumeMute : faVolumeUp}
+              className="navbar-icon w-10 text-inherit"
+              //TODO: Fix icon toggling sync with settings popup
+              icon={
+                props.settings.audioLevel === 1
+                  ? faVolumeLow
+                  : props.settings.audioLevel === 2
+                  ? faVolumeUp
+                  : faVolumeMute
+              }
             />
           </button>
         </div>
@@ -44,12 +67,12 @@ export default function Navbar(props: NavbarProps) {
         <div>
           <button onClick={() => props.setIsSettingsVisible(true)}>
             <FontAwesomeIcon
-              className="navbar-icon dark:text-inherit"
+              className="navbar-icon text-inherit"
               icon={faGear}
             />
           </button>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   )
 }

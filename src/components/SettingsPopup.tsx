@@ -1,26 +1,22 @@
 import React from "react"
 import packageJson from "../../package.json"
+import { Settings } from "../utils/settingsUtils"
+import { SetStateAction } from "react"
+import { Dispatch } from "react"
 
 //TODO: Refactor settings
-interface SettingsProps {
-  settings: {
-    audioLevel: number
-    readyTimer: number
-    activeTimer: number
-    breakTimer: number
-    darkMode: boolean
-  }
-  setSettings: any
+export interface SettingsPopupProps {
+  settings: Settings
+  setSettings: Dispatch<SetStateAction<Settings>>
   isTimeRunning: boolean
   visible: boolean
   setVisible: (input: boolean) => void
-  children?: React.ReactNode
 }
 
-export default function SettingsPopup(props: SettingsProps) {
+export default function SettingsPopup(props: SettingsPopupProps) {
   function handleSettingsChange(event: any) {
     const { name, value, checked } = event.target
-    props.setSettings((prevSettings: Object) => ({
+    props.setSettings((prevSettings: Settings) => ({
       ...prevSettings,
       [name]: name === "darkMode" ? checked : parseInt(value),
     }))
@@ -52,7 +48,7 @@ export default function SettingsPopup(props: SettingsProps) {
           <input
             disabled={props.isTimeRunning}
             className="bg-red-300 setting-input"
-            type="text"
+            type="number"
             name="activeTimer"
             value={props.settings.activeTimer}
             onChange={handleSettingsChange}
@@ -72,7 +68,7 @@ export default function SettingsPopup(props: SettingsProps) {
           <input
             disabled={props.isTimeRunning}
             className="bg-green-300 setting-input"
-            type="text"
+            type="number"
             name="breakTimer"
             value={props.settings.breakTimer}
             onChange={handleSettingsChange}

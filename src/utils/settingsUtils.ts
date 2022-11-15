@@ -1,4 +1,12 @@
-export function getDefaultSettings() {
+export interface Settings {
+  audioLevel: number
+  readyTimer: number
+  activeTimer: number
+  breakTimer: number
+  darkMode: boolean
+}
+
+export function getDefaultSettings(): Settings {
   return {
     audioLevel: 1,
     readyTimer: 5,

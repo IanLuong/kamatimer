@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar"
 import SettingsPopup from "./components/SettingsPopup"
 
 import { getTimeString } from "./utils/timeUtils"
-import { getDefaultSettings } from "./utils/settingsUtils"
+import { getDefaultSettings, Settings } from "./utils/settingsUtils"
 
 const bellSfx = require("./sounds/bell.mp3")
 const tickSfx = require("./sounds/tick.mp3")
@@ -17,19 +17,9 @@ enum Mode {
   BREAK,
 }
 
-interface IState {
-  settings: {
-    audioLevel: number
-    readyTimer: number
-    activeTimer: number
-    breakTimer: number
-    darkMode: boolean
-  }
-}
-
 function App() {
   //Checks if settings are in local storage, otherwise get default
-  const [settings, setSettings] = useState<IState["settings"]>(
+  const [settings, setSettings] = useState<Settings>(
     JSON.parse(localStorage.getItem("settings")!) || getDefaultSettings()
   )
 

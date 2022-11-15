@@ -5,6 +5,7 @@ import {
   faVolumeLow,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Settings } from "../utils/settingsUtils"
 
 enum Mode {
   INACTIVE,
@@ -14,22 +15,14 @@ enum Mode {
 
 interface NavbarProps {
   setIsSettingsVisible: (input: boolean) => void
-  settings: settingsObject
+  settings: Settings
   setSettings: any
   mode: Mode
 }
 
-interface settingsObject {
-  audioLevel: number
-  readyTimer: number
-  activeTimer: number
-  breakTimer: number
-  darkMode: boolean
-}
-
 export default function Navbar(props: NavbarProps) {
   function toggleMute() {
-    props.setSettings((prevSettings: settingsObject) => ({
+    props.setSettings((prevSettings: Settings) => ({
       ...prevSettings,
       audioLevel: (prevSettings.audioLevel % 3) + 1,
     }))
@@ -50,7 +43,7 @@ export default function Navbar(props: NavbarProps) {
           <button onClick={toggleMute}>
             <FontAwesomeIcon
               className="navbar-icon w-10 text-inherit"
-              //TODO: Fix icon toggling sync with settings popup
+              //TODO: Refactor icon switching code
               icon={
                 props.settings.audioLevel === 1
                   ? faVolumeLow

@@ -43,6 +43,7 @@ export default function Navbar(props: NavbarProps) {
           <button onClick={toggleMute}>
             <FontAwesomeIcon
               className="navbar-icon w-10 text-inherit"
+              title="Toggle Audio"
               //TODO: Refactor icon switching code
               icon={
                 props.settings.audioLevel === 1
@@ -61,6 +62,7 @@ export default function Navbar(props: NavbarProps) {
           <button onClick={() => props.setIsSettingsVisible(true)}>
             <FontAwesomeIcon
               className="navbar-icon text-inherit"
+              title="Settings"
               icon={faGear}
             />
           </button>

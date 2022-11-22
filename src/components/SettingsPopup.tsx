@@ -37,42 +37,52 @@ export default function SettingsPopup(props: SettingsPopupProps) {
 
         <div className="flex justify-between border-b-2 py-4">
           <div>
-            <h1 className="">Focus Time (secs)</h1>
+            <h1>Set Focus Time</h1>
             <p className="text-sm text-black/60 dark:text-white/60">
-              Default = 1500s
+              Default = 25 mins
             </p>
             <p className="text-sm text-black/60 dark:text-white/60">
               Timer must be stopped before applying
             </p>
           </div>
-          <input
-            disabled={props.isTimeRunning}
-            className="bg-red-300 setting-input"
-            type="number"
-            name="activeTimer"
+          <select
+            className="bg-red-300 setting-input w-24"
             value={props.settings.activeTimer}
+            name="activeTimer"
             onChange={handleSettingsChange}
-          />
+          >
+            <option value={60}>1 min</option>
+            <option value={300}>5 mins</option>
+            <option value={600}>10 mins</option>
+            <option value={900}>15 mins</option>
+            <option value={1200}>20 mins</option>
+            <option value={1500}>25 mins</option>
+          </select>
         </div>
 
         <div className="flex justify-between border-b-2 py-4">
           <div>
-            <h1 className="">Break Time (secs)</h1>
+            <h1>Set Break Time</h1>
             <p className="text-sm text-black/60 dark:text-white/60">
-              Default = 300s
+              Default = 5 mins
             </p>
             <p className="text-sm text-black/60 dark:text-white/60">
               Timer must be stopped before applying
             </p>
           </div>
-          <input
-            disabled={props.isTimeRunning}
-            className="bg-green-300 setting-input"
-            type="number"
-            name="breakTimer"
+          <select
+            className="bg-green-300 setting-input w-24"
             value={props.settings.breakTimer}
+            name="breakTimer"
             onChange={handleSettingsChange}
-          />
+          >
+            <option value={60}>1 min</option>
+            <option value={300}>5 mins</option>
+            <option value={600}>10 mins</option>
+            <option value={900}>15 mins</option>
+            <option value={1200}>20 mins</option>
+            <option value={1500}>25 mins</option>
+          </select>
         </div>
 
         <div className="flex justify-between border-b-2 py-4">
@@ -83,7 +93,7 @@ export default function SettingsPopup(props: SettingsPopupProps) {
             name="audioLevel"
             onChange={handleSettingsChange}
           >
-            <option value={0 as number}>Mute</option>
+            <option value={0}>Mute</option>
             <option value={1}>Tick Last 10 Secs</option>
             <option value={2}>Always Tick</option>
           </select>

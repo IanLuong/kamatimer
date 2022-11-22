@@ -1,7 +1,7 @@
 {
   "name": "kamatimer",
   "homepage": "https://ianluong.github.io/kamatimer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",

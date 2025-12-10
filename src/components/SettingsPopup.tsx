@@ -114,7 +114,7 @@ export default function SettingsPopup(props: SettingsPopupProps) {
           <p className="font-cabin text-sm">
             Created by{" "}
             <a
-              href="https://ianluong.github.io"
+              href="https://ianluong.dev"
               target="_blank"
               className="underline decoration-dotted"
               rel="noreferrer"

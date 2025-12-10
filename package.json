@@ -1,6 +1,5 @@
 {
   "name": "kamatimer",
-  "homepage": "https://ianluong.github.io/kamatimer",
   "version": "0.1.2",
   "private": true,
   "dependencies": {
